@@ -1,4 +1,3 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'Description3.dart';
 
@@ -97,30 +96,27 @@ class Description2 extends StatelessWidget {
             ],
           ),
           SizedBox(height: screenHeight * 0.04),  // 버튼과 점 사이의 간격 (4% 높이)
-          GestureDetector(
-            onTap: () {
+          ElevatedButton(
+            onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Description3()),
               );
             },
-            child: Container(
-              width: screenWidth * 0.9,  // 화면 너비의 90%
-              height: screenHeight * 0.08,  // 화면 높이의 8%
-              decoration: BoxDecoration(
-                color: Color(0xFFFF6B6B),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFFF6B6B), // 배경 색상
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Center(
-                child: Text(
-                  '다음',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: 'Sen',
-                  ),
-                ),
+              minimumSize: Size(screenWidth * 0.9, screenHeight * 0.08), // 버튼 크기
+            ),
+            child: Text(
+              '다음',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontFamily: 'Sen',
               ),
             ),
           ),

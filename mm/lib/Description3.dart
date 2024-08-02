@@ -91,30 +91,33 @@ class Description3 extends StatelessWidget {
             ],
           ),
           SizedBox(height: screenHeight * 0.04),  // 버튼과 점 사이의 간격 (4% 높이)
+<<<<<<< HEAD
           GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => LogInEmpty()),
               );
+=======
+          ElevatedButton(
+            onPressed: () {
+              // 다음 페이지로 이동하는 코드
+>>>>>>> 386f31e1dc575a47501739395385d7dd8b596bb1
             },
-            child: Container(
-              width: screenWidth * 0.9,  // 화면 너비의 90%
-              height: screenHeight * 0.08,  // 화면 높이의 8%
-              decoration: BoxDecoration(
-                color: Color(0xFFFF6B6B),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFFF6B6B), // 배경 색상
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Center(
-                child: Text(
-                  '다음',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: 'Sen',
-                  ),
-                ),
+              minimumSize: Size(screenWidth * 0.9, screenHeight * 0.08), // 버튼 크기
+            ),
+            child: Text(
+              '다음',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontFamily: 'Sen',
               ),
             ),
           ),

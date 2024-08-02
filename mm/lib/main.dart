@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mm/Description1.dart';
+<<<<<<< HEAD
 import 'package:mm/Forgot_Password.dart';
 import 'package:mm/Sign_up.dart';
 import 'package:mm/log_in_empty.dart';
 import 'Description1.dart';
+=======
+>>>>>>> 386f31e1dc575a47501739395385d7dd8b596bb1
 
 void main() {
   runApp(FlutterApp());
@@ -30,7 +33,11 @@ class _IntroPageState extends State<IntroPage> {
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
+<<<<<<< HEAD
         MaterialPageRoute(builder: (context) => LogInEmpty()),
+=======
+        MaterialPageRoute(builder: (context) => Description1()),
+>>>>>>> 386f31e1dc575a47501739395385d7dd8b596bb1
       );
     });
   }
