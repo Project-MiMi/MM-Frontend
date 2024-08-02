@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mm/Description1.dart';
+import 'package:mm/Forgot_Password.dart';
+import 'package:mm/Sign_up.dart';
+import 'package:mm/log_in_empty.dart';
 import 'Description1.dart';
 
 void main() {
@@ -27,7 +30,7 @@ class _IntroPageState extends State<IntroPage> {
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Description1()),
+        MaterialPageRoute(builder: (context) => LogInEmpty()),
       );
     });
   }
@@ -79,3 +82,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
