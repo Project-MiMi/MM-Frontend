@@ -39,8 +39,8 @@ class _IntroPageState extends State<IntroPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 280,
-              height: 289,
+              width: 240,
+              height: 220,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('images/logo.png'),
