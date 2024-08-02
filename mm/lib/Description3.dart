@@ -10,14 +10,14 @@ class FlutterApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Description1(),
+          child: Description3(),
         ),
       ),
     );
   }
 }
 
-class Description1 extends StatelessWidget {
+class Description3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 화면의 전체 높이와 너비를 가져옵니다.
