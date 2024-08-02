@@ -1,22 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Creation_Complete.dart';
 
-void main() {
-  runApp(FlutterApp());
-}
-
-class FlutterApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: CreateGroup(),
-      ),
-    );
-  }
-}
-
 class CreateGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -121,7 +105,9 @@ class CreateGroup extends StatelessWidget {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFFF6B6B),
                   shape: RoundedRectangleBorder(
@@ -146,7 +132,8 @@ class CreateGroup extends StatelessWidget {
                   Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => Creation_Complete(),
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          Creation_Complete(),
                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
                         return FadeTransition(
                           opacity: animation,

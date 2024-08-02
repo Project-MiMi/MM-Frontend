@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(FlutterApp());
-}
-
-class FlutterApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: SelectGroup(),
-      ),
-    );
-  }
-}
-
 class SelectGroup extends StatefulWidget {
   @override
   _SelectGroupState createState() => _SelectGroupState();
@@ -124,7 +108,9 @@ class _SelectGroupState extends State<SelectGroup> {
         padding: EdgeInsets.all(16.0),
         color: Colors.white,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: Color(0xFFFF6B6B),
             shape: RoundedRectangleBorder(
