@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(FlutterApp());
-}
+import 'log_in_empty.dart'; // Import the LogInEmpty page
 
 class FlutterApp extends StatelessWidget {
   @override
@@ -20,7 +17,6 @@ class FlutterApp extends StatelessWidget {
 class Description3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // 화면의 전체 높이와 너비를 가져옵니다.
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -97,7 +93,10 @@ class Description3 extends StatelessWidget {
           SizedBox(height: screenHeight * 0.04),  // 버튼과 점 사이의 간격 (4% 높이)
           GestureDetector(
             onTap: () {
-              // 다음 페이지로 이동하는 코드
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LogInEmpty()),
+              );
             },
             child: Container(
               width: screenWidth * 0.9,  // 화면 너비의 90%

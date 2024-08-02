@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mm/Description1.dart';
+import 'Description1.dart';
 
 void main() {
   runApp(FlutterApp());
@@ -22,10 +24,10 @@ class _IntroPageState extends State<IntroPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 100), () {
+    Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => Description1()),
       );
     });
   }
