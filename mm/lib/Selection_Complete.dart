@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mm/Show_Group.dart';  // ShowGroup 클래스를 import 합니다.
 import 'package:mm/log_in_empty.dart';
 
-class Creation_Complete extends StatelessWidget {
+class SelectionComplete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,10 +44,9 @@ class Creation_Complete extends StatelessWidget {
                     SizedBox(height: 20), // 간격 조정
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => LogInEmpty()),
-                          (Route<dynamic> route) => false,
+                        print('pushed');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ShowGroup()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
