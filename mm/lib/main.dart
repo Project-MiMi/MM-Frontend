@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mm/Description1.dart';
 import 'package:mm/Forgot_Password.dart';
 import 'package:mm/HomePage.dart';
+import 'package:mm/Location_Access.dart';
 import 'package:mm/Sign_up.dart';
 import 'package:mm/log_in_empty.dart';
 import 'Description1.dart';
@@ -31,7 +32,7 @@ class _IntroPageState extends State<IntroPage> {
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => LocationAccess()),
       );
     });
   }
