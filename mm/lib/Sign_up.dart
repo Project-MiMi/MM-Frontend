@@ -15,7 +15,7 @@ class SignUp extends StatelessWidget {
     final String username = _usernameController.text;
     final String password = _passwordController.text;
 
-    final String url = 'https://mimap.vercel.app/signup'; // API 엔드포인트
+    final String url = 'https://mimap.vercel.app/api/user/register'; // API 엔드포인트
 
     final response = await http.post(
       Uri.parse(url),
@@ -25,7 +25,7 @@ class SignUp extends StatelessWidget {
       body: jsonEncode(<String, String>{
         'email': email,
         'pw': password,
-        '별명': username,
+        'nickname': username,
       }),
     );
 

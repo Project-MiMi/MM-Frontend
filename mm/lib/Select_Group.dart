@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mm/Selection_Complete.dart';
 import 'dart:convert';
+import 'package:mm/main.dart';
+
 
 class SelectGroup extends StatefulWidget {
   @override
@@ -20,22 +23,25 @@ class _SelectGroupState extends State<SelectGroup> {
   Future<void> _fetchGroups() async {
     try {
       final response = await http.get(
-        Uri.parse('https://mimap.vercel.app/group'),
+        Uri.parse('https://mimap.vercel.app/api/group'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
 
-      print('Request URL: https://mimap.vercel.app/group');
+      print('Request URL: https://mimap.vercel.app/api/group');
       print('Response status code: ${response.statusCode}');
       print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        List<dynamic> data = jsonDecode(response.body);
+        var data = jsonDecode(response.body)['data'];
+
+        print('Decoded JSON: $data');
 
         setState(() {
-          groups = data.map((item) {
+          groups = data.map<Map<String, dynamic>>((item) {
             return {
+              'group_id': item['group_id'],
               'title': item['name'],
               'tags': List<String>.from(item['tags']),
               'members': '${item['population']}명',
@@ -48,6 +54,35 @@ class _SelectGroupState extends State<SelectGroup> {
       }
     } catch (e) {
       print('Error fetching groups: $e');
+    }
+  }
+
+  Future<void> _joinGroup(int groupId) async {
+    try {
+      final response = await http.post(
+        Uri.parse('https://mimap.vercel.app/api/group/enter'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'group_id': groupId,
+          'user_id': UserSession().userId,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SelectionComplete()),
+        );
+      } else {
+        throw Exception('Failed to join group');
+      }
+    } catch (e) {
+      print('Error joining group: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('그룹 가입에 실패했습니다. 다시 시도해주세요.')),
+      );
     }
   }
 
@@ -109,8 +144,14 @@ class _SelectGroupState extends State<SelectGroup> {
                 children: groups
                     .map((group) => Column(
                           children: [
-                            buildGroupItem(
-                                group['title'], group['tags'], group['members']),
+                            GestureDetector(
+                              onTap: () => _joinGroup(group['group_id']),
+                              child: buildGroupItem(
+                                group['title'], 
+                                group['tags'], 
+                                group['members']
+                              ),
+                            ),
                             SizedBox(height: 16),
                           ],
                         ))
