@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'main.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,17 +12,63 @@ class _HomePageState extends State<HomePage> {
   String selectedTag = 'All';
   bool showGroups = false;
   String selectedGroup = '한양대#KR1';
-  List<String> groups = [
-    '한양대#KR1',
-    '서울대#KR1',
-    '고려대#KR1',
-    '연세대#KR1',
-    '성균관대#KR1'
-  ];
+  List<String> groups = [];
+  String statusMessage = 'Loading...';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchGroups();
+  }
+
+  Future<void> fetchGroups() async {
+    final String? userId = UserSession().userId; // 실제 user_id를 가져옴
+    if (userId == null) {
+      setState(() {
+        statusMessage = 'Error: user_id is null';
+      });
+      return;
+    }
+    
+    final String apiUrl = 'https://mimap.vercel.app/api/user/info?user_id=$userId';
+
+    try {
+      print('Sending request to: $apiUrl'); // Log URL
+      final response = await http.get(Uri.parse(apiUrl), headers: {
+        'Content-Type': 'application/json',
+      });
+
+      print('Response status: ${response.statusCode}'); // Log status code
+      print('Response body: ${response.body}'); // Log response body
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        if (jsonResponse.containsKey('groups')) {
+          setState(() {
+            groups = List<String>.from(jsonResponse['groups']);
+            selectedGroup = groups.isNotEmpty ? groups[0] : '';
+            statusMessage = 'Groups loaded successfully';
+          });
+        } else {
+          setState(() {
+            statusMessage = 'No groups found';
+          });
+        }
+      } else {
+        setState(() {
+          statusMessage = 'Failed to load groups: ${response.statusCode}';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        statusMessage = 'Error: $e';
+      });
+      print('Error: $e'); // Log error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // 화면의 너비와 높이 가져오기
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -80,12 +129,22 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
+                            if (statusMessage.isNotEmpty)
+                              Text(
+                                statusMessage,
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 12,
+                                  fontFamily: 'Sen',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
                           ],
                         ),
                       ),
                       Positioned(
                         left: 24,
-                        top: screenHeight * 0.18,
+                        top: screenHeight * 0.30,
                         child: Text(
                           'Hey Decamilo, 밥 뭇나',
                           style: TextStyle(
@@ -404,6 +463,19 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+void main() {
+  runApp(FlutterApp());
+}
+
+class FlutterApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: HomePage(),
     );
   }
 }
