@@ -47,12 +47,21 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              '현재 그룹',
+                              style: TextStyle(
+                                color: Color(0xFFFF6B6B),
+                                fontSize: 20,
+                                fontFamily: 'Sen',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                             Row(
                               children: [
                                 Text(
                                   selectedGroup,
                                   style: TextStyle(
-                                    color: Color(0xFFFF8F8F),
+                                    color: Color(0xFF676767),
                                     fontSize: 15,
                                     fontFamily: 'Sen',
                                     fontWeight: FontWeight.w700,
@@ -61,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                                 IconButton(
                                   icon: Icon(
                                     showGroups ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                                    color: Color(0xFFFF8F8F),
+                                    color: Color(0xFF676767),
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -167,10 +176,13 @@ class _HomePageState extends State<HomePage> {
             if (showGroups)
               Positioned(
                 left: 24,
-                top: screenHeight * 0.12,
+                top: screenHeight * 0.16,
                 child: Container(
                   width: screenWidth - 48,
-                  color: Color(0xFFF0F0F0),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF0F0F0),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: groups
@@ -182,7 +194,11 @@ class _HomePageState extends State<HomePage> {
                                   showGroups = false;
                                 });
                               },
-                              child: Padding(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: selectedGroup == group ? Color(0xFF676767) : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                                 child: Text(
                                   group,
@@ -207,7 +223,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildTagButton(String label, Color backgroundColor) {
     return GestureDetector(
-      onTapDown: (_) {
+      onTap: () {
         setState(() {
           selectedTag = label;
         });
@@ -262,7 +278,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildRestaurantButton(String name, String description, String rating, String delivery, String time) {
     return GestureDetector(
-      onTapDown: (_) {
+      onTap: () {
         setState(() {
           selectedTag = name;
         });
@@ -291,7 +307,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               width: double.infinity,
-              height: 137,
+              height: 135,
               decoration: ShapeDecoration(
                 color: Color(0xFFC4C4C4),
                 shape: RoundedRectangleBorder(
