@@ -8,51 +8,52 @@ class SelectCreateGroup extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return SingleChildScrollView(
-      child: Center(
-        child: Container(
-          width: screenWidth,
-          height: screenHeight,
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-          decoration: ShapeDecoration(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            width: screenWidth,
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Spacer(flex: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  buildButton(context, '그룹 가입', Icons.search, SelectGroup()),
-                  buildButton(context, '그룹 생성', Icons.add, CreateGroup()),
-                ],
-              ),
-              Spacer(flex: 2),
-              TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  backgroundColor: Colors.grey[300],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Column 크기를 콘텐츠에 맞춤
+              children: [
+                SizedBox(height: screenHeight * 0.35), // 상단 여백, 버튼을 페이지 중앙에 위치하도록 조정
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    buildButton(context, '그룹 가입', Icons.search, SelectGroup()),
+                    buildButton(context, '그룹 생성', Icons.add, CreateGroup()),
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.3), // 버튼 사이 여백
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    backgroundColor: Colors.grey[300],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Text(
+                    '지금은 안할래요!',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontFamily: 'Sen',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-                child: Text(
-                  '지금은 안할래요!',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontFamily: 'Sen',
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              Spacer(flex: 1),
-            ],
+                SizedBox(height: screenHeight * 0.02), // 하단 여백
+              ],
+            ),
           ),
         ),
       ),
