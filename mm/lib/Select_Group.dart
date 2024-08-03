@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SelectGroup extends StatefulWidget {
   @override
@@ -6,37 +8,51 @@ class SelectGroup extends StatefulWidget {
 }
 
 class _SelectGroupState extends State<SelectGroup> {
-  final TextEditingController _searchController = TextEditingController();
-  List<Map<String, dynamic>> groups = [
-    {'title': '한양대 JMT #KR1', 'tags': ['#일식', '#한식'], 'members': '210명'},
-    {'title': '고려대 맛집 #KR2', 'tags': ['#양식', '#중식'], 'members': '150명'},
-    {'title': '서울대 밥집 #KR3', 'tags': ['#한식', '#분식'], 'members': '300명'},
-  ];
+  List<Map<String, dynamic>> groups = [];
   late List<Map<String, dynamic>> filteredGroups;
 
   @override
   void initState() {
     super.initState();
-    filteredGroups = groups;
-    _searchController.addListener(_filterGroups);
+    _fetchGroups(); // Fetch groups from the API
   }
 
-  void _filterGroups() {
-    final query = _searchController.text;
-    if (query.isNotEmpty) {
-      filteredGroups = groups.where((group) {
-        return group['title'].contains(query) ||
-            group['tags'].any((tag) => tag.contains(query));
-      }).toList();
-    } else {
-      filteredGroups = groups;
+  Future<void> _fetchGroups() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://mimap.vercel.app/group'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      print('Request URL: https://mimap.vercel.app/group');
+      print('Response status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = jsonDecode(response.body);
+
+        setState(() {
+          groups = data.map((item) {
+            return {
+              'title': item['name'],
+              'tags': List<String>.from(item['tags']),
+              'members': '${item['population']}명',
+            };
+          }).toList();
+          filteredGroups = groups;
+        });
+      } else {
+        throw Exception('Failed to load groups');
+      }
+    } catch (e) {
+      print('Error fetching groups: $e');
     }
-    setState(() {});
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
     super.dispose();
   }
 
@@ -71,7 +87,6 @@ class _SelectGroupState extends State<SelectGroup> {
                   SizedBox(width: 10),
                   Expanded(
                     child: TextField(
-                      controller: _searchController,
                       decoration: InputDecoration(
                         hintText: '그룹 이름을 검색하세요!',
                         border: InputBorder.none,
@@ -82,6 +97,7 @@ class _SelectGroupState extends State<SelectGroup> {
                           letterSpacing: -0.33,
                         ),
                       ),
+                      enabled: false, // 검색 기능 비활성화
                     ),
                   ),
                 ],
@@ -90,7 +106,7 @@ class _SelectGroupState extends State<SelectGroup> {
             SizedBox(height: 16),
             Expanded(
               child: ListView(
-                children: filteredGroups
+                children: groups
                     .map((group) => Column(
                           children: [
                             buildGroupItem(
