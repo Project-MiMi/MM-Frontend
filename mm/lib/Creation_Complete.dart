@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mm/Show_Group.dart';
 
 class Creation_Complete extends StatelessWidget {
   @override
@@ -41,7 +42,12 @@ class Creation_Complete extends StatelessWidget {
                     ),
                     SizedBox(height: 20), // 간격 조정
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print('pushed');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ShowGroup()),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFFF6B6B),
                         shape: RoundedRectangleBorder(
