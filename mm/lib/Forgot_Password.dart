@@ -15,120 +15,112 @@ class FlutterApp extends StatelessWidget {
 class ForgotPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        color: Color(0xFFE97451),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Stack(
+    return Scaffold(
+      backgroundColor: Color(0xFFE97451),
+      body: Stack(
         children: [
-          Positioned(
-            left: 0,
-            top: 200,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 200,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
-                ),
-              ),
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: Color(0xFFE97451),
             ),
-          ),
-          Positioned(
-            left: 24,
-            top: 630,
-            child: Container(
-              width: 327,
-              height: 62,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: 0,
-                    top: 0,
-                    child: Container(
-                      width: 327,
-                      height: 62,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFF6B6B),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+            child: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFE97451),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(24),
+                      bottomRight: Radius.circular(24),
                     ),
                   ),
-                  Positioned(
-                    left: 144,
-                    top: 22.50,
+                  child: Center(
                     child: Text(
-                      'NEXT',
+                      'Forgot Password',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 30,
                         fontFamily: 'Sen',
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            left: 24,
-            top: 230,
-            child: Container(
-              width: 327,
-              height: 62,
-              padding: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: '이메일',
-                  border: InputBorder.none,
                 ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-            ),
-          ),
-          Positioned(
-            left: MediaQuery.of(context).size.width / 2 - 120,
-            top: 70,
-            child: Text(
-              'Forgot Password',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontFamily: 'Sen',
-              ),
-            ),
-          ),
-          Positioned(
-            left: -83,
-            top: -94,
-            child: Container(
-              width: 552,
-              height: 449,
-              child: Opacity(
-                opacity: 0.05,
-                child: Container(
-                  width: 177,
-                  height: 177,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      width: 94,
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
                       color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 30),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '이메일',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Sen',
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Container(
+                            width: 346,
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 212, 210, 210),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                          ),
+                          SizedBox(height: 30),
+                          Spacer(),
+                          Container(
+                            width: 327,
+                            height: 62,
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFFFF6B6B),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              child: Text(
+                                'NEXT',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontFamily: 'Sen',
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 30), // 하단부 여백
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
           Positioned(
@@ -145,8 +137,28 @@ class ForgotPassword extends StatelessWidget {
               ),
             ),
           ),
+          Opacity(
+            opacity: 0.05,
+            child: Center(
+              child: Container(
+                width: 552,
+                height: 449,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    width: 94,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
+}
+
+void main() {
+  runApp(FlutterApp());
 }
