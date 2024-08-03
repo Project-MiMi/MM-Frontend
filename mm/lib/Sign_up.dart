@@ -1,6 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:mm/Group_Action.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUp extends StatelessWidget {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _signUp(BuildContext context) async {
+    final String name = _nameController.text;
+    final String email = _emailController.text;
+    final String username = _usernameController.text;
+    final String password = _passwordController.text;
+
+    final String url = 'https://mimap.vercel.app/signup'; // API 엔드포인트
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': email,
+        'pw': password,
+        '별명': username,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // 서버로부터 성공적인 응답을 받았을 때
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SelectCreateGroup()),
+      );
+    } else {
+      // 오류 처리
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Sign Up Failed: ${response.reasonPhrase}')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -45,18 +87,21 @@ class SignUp extends StatelessWidget {
                           context,
                           label: '이름',
                           hintText: '김민재',
+                          controller: _nameController,
                         ),
                         SizedBox(height: 1),
                         _buildInputField(
                           context,
                           label: '이메일',
                           hintText: 'example@gmail.com',
+                          controller: _emailController,
                         ),
                         SizedBox(height: 1),
                         _buildInputField(
                           context,
                           label: '아이디',
                           hintText: 'decamilo',
+                          controller: _usernameController,
                         ),
                         SizedBox(height: 1),
                         _buildInputField(
@@ -64,12 +109,13 @@ class SignUp extends StatelessWidget {
                           label: '비밀번호',
                           hintText: '**********',
                           obscureText: true,
+                          controller: _passwordController,
                         ),
                         SizedBox(height: screenHeight * 0.04), // 버튼 위 여백 증가
                         Center(
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pop(context); // 이전 페이지로 돌아가기
+                              _signUp(context);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFFFF6B6B),
@@ -197,6 +243,7 @@ class SignUp extends StatelessWidget {
     required String label,
     required String hintText,
     bool obscureText = false,
+    required TextEditingController controller,
   }) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Column(
@@ -213,6 +260,7 @@ class SignUp extends StatelessWidget {
         ),
         SizedBox(height: 8), // 라벨과 입력 필드 사이의 간격
         TextFormField(
+          controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
             hintText: hintText,

@@ -11,6 +11,19 @@ void main() {
   runApp(FlutterApp());
 }
 
+class UserSession {
+  static final UserSession _singleton = UserSession._internal();
+
+  String? userId;
+
+  factory UserSession() {
+    return _singleton;
+  }
+
+  UserSession._internal();
+}
+
+
 class FlutterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -40,7 +53,7 @@ class _IntroPageState extends State<IntroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white,  
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,4 +83,5 @@ class _IntroPageState extends State<IntroPage> {
     );
   }
 }
+
 

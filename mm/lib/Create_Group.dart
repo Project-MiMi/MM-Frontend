@@ -1,7 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'Creation_Complete.dart';
+import 'package:mm/main.dart';
 
 class CreateGroup extends StatelessWidget {
+  final TextEditingController _groupNameController = TextEditingController();
+  final TextEditingController _groupTagController = TextEditingController();
+
+  Future<void> _createGroup(BuildContext context) async {
+    String groupName = _groupNameController.text;
+    String groupTag = _groupTagController.text;
+    String userId = UserSession().userId ?? '';
+    String group = groupName+"#"+groupTag;
+
+    final response = await http.post(
+      Uri.parse('https://mimap.vercel.app/api/group/establish'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'user_id': userId,
+        'group_name': group,
+        'tags': [],
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // 그룹 생성 성공 시 다음 페이지로 이동
+      Navigator.push(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => Creation_Complete(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        ),
+      );
+    } else {
+      // 그룹 생성 실패 시 메시지 표시
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('그룹 생성 실패. 다시 시도해주세요.')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +84,7 @@ class CreateGroup extends StatelessWidget {
                     SizedBox(width: 10),
                     Expanded(
                       child: TextField(
+                        controller: _groupNameController,
                         decoration: InputDecoration(
                           hintText: '그룹명을 입력하세요!',
                           border: InputBorder.none,
@@ -79,6 +126,7 @@ class CreateGroup extends StatelessWidget {
                     SizedBox(width: 10),
                     Expanded(
                       child: TextField(
+                        controller: _groupTagController,
                         decoration: InputDecoration(
                           hintText: '그룹 태그를 입력하세요!',
                           border: InputBorder.none,
@@ -129,19 +177,7 @@ class CreateGroup extends StatelessWidget {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          Creation_Complete(),
-                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                        return FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        );
-                      },
-                    ),
-                  );
+                  _createGroup(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFFF6B6B),

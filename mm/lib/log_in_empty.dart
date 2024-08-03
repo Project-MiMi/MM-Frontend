@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:mm/Forgot_Password.dart'; // ForgotPasswordPage 클래스를 import 합니다.
 import 'package:mm/Sign_up.dart'; // SignUp 페이지를 import 합니다.
+import 'package:mm/Group_Action.dart';
+import 'package:mm/main.dart';
 
 class LogInEmpty extends StatefulWidget {
   @override
@@ -9,6 +13,37 @@ class LogInEmpty extends StatefulWidget {
 
 class _LogInEmptyState extends State<LogInEmpty> {
   bool _isAutoLoginChecked = false;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _login() async {
+    final response = await http.post(
+      Uri.parse('https://mimap.vercel.app/api/user/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': _emailController.text,
+        'pw': _passwordController.text,
+      }),
+    );
+    
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      final userId = responseData['userId'];
+      UserSession().userId = userId;
+      // 로그인 성공
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SelectCreateGroup()),
+      );
+    } else {
+      // 로그인 실패
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('로그인 실패. 다시 시도해주세요.')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -205,41 +240,30 @@ class _LogInEmptyState extends State<LogInEmpty> {
                 Positioned(
                   left: screenWidth * 0.06,
                   top: screenHeight * 0.65,
-                  child: Container(
-                    width: screenWidth * 0.87,
-                    height: screenHeight * 0.08,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          left: 0,
-                          top: 0,
-                          child: Container(
-                            width: screenWidth * 0.87,
-                            height: screenHeight * 0.08,
-                            decoration: ShapeDecoration(
-                              color: Color(0xFFFF6B6B),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
+                  child: GestureDetector(
+                    onTap: _login,
+                    child: Container(
+                      width: screenWidth * 0.87,
+                      height: screenHeight * 0.08,
+                      decoration: ShapeDecoration(
+                        color: Color(0xFFFF6B6B),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'LOG IN',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: screenWidth * 0.037,
+                            fontFamily: 'Sen',
+                            fontWeight: FontWeight.w700,
+                            height: 1.2,
                           ),
                         ),
-                        Positioned(
-                          left: screenWidth * 0.36,
-                          top: screenHeight * 0.03,
-                          child: Text(
-                            'LOG IN',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: screenWidth * 0.037,
-                              fontFamily: 'Sen',
-                              fontWeight: FontWeight.w700,
-                              height: 1.2,
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -317,6 +341,7 @@ class _LogInEmptyState extends State<LogInEmpty> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: TextField(
+                            controller: _passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -366,6 +391,7 @@ class _LogInEmptyState extends State<LogInEmpty> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: TextField(
+                            controller: _emailController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.symmetric(
