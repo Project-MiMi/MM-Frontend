@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mm/log_in_empty.dart';
 import 'Description3.dart';
 
 void main() {
@@ -121,16 +122,23 @@ class Description2 extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),  // 아래쪽 간격
-          Text(
-            'Skip',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xFF646982),
-              fontSize: 16,
-              fontFamily: 'Sen',
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LogInEmpty()),
+              );
+            },
+            child: Text(
+              'Skip',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF646982),
+                fontSize: 16,
+                fontFamily: 'Sen',
+              ),
             ),
-          ),
-          SizedBox(height: 20),  // 아래쪽 간격
+          ), // 아래쪽 간격
         ],
       ),
     );

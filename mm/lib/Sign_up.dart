@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mm/Group_Action.dart';
 
 class SignUp extends StatelessWidget {
   @override
@@ -68,7 +69,15 @@ class SignUp extends StatelessWidget {
                         SizedBox(height: screenHeight * 0.04), // 버튼 위 여백 증가
                         Center(
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              // 'Group Action' 페이지로 이동
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SelectCreateGroup(),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFFFF6B6B),
                               shape: RoundedRectangleBorder(

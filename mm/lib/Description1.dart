@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'log_in_empty.dart'; // Import the LogInEmpty page
 import 'Description2.dart';
 
 void main() {
@@ -126,13 +127,21 @@ class _Description1State extends State<Description1> {
             ),
           ),
           SizedBox(height: 20),  // 아래쪽 간격
-          Text(
-            'Skip',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xFF646982),
-              fontSize: 16,
-              fontFamily: 'Sen',
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LogInEmpty()),
+              );
+            },
+            child: Text(
+              'Skip',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF646982),
+                fontSize: 16,
+                fontFamily: 'Sen',
+              ),
             ),
           ),
           SizedBox(height: 20),  // 아래쪽 간격

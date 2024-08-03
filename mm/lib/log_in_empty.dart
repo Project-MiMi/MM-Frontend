@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mm/Forgot_Password.dart'; // ForgotPasswordPage 클래스를 import 합니다.
-import 'package:mm/Sign_up.dart';
-import 'Sign_up.dart'; // SignUp 페이지를 import 합니다.
+import 'package:mm/Sign_up.dart'; // SignUp 페이지를 import 합니다.
 
-class LogInEmpty extends StatelessWidget {
+class LogInEmpty extends StatefulWidget {
+  @override
+  _LogInEmptyState createState() => _LogInEmptyState();
+}
+
+class _LogInEmptyState extends State<LogInEmpty> {
+  bool _isAutoLoginChecked = false;
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -239,7 +245,7 @@ class LogInEmpty extends StatelessWidget {
                 ),
                 Positioned(
                   left: screenWidth * 0.53,
-                  top: screenHeight * 0.54,
+                  top: screenHeight * 0.57,
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -261,12 +267,16 @@ class LogInEmpty extends StatelessWidget {
                 ),
                 Positioned(
                   left: screenWidth * 0.02,
-                  top: screenHeight * 0.52,
+                  top: screenHeight * 0.55,
                   child: Row(
                     children: [
                       Checkbox(
-                        value: true,
-                        onChanged: (value) {},
+                        value: _isAutoLoginChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            _isAutoLoginChecked = value ?? false;
+                          });
+                        },
                       ),
                       Text(
                         '자동 로그인',
@@ -287,56 +297,43 @@ class LogInEmpty extends StatelessWidget {
                   child: Container(
                     width: screenWidth * 0.87,
                     height: screenHeight * 0.1,
-                    child: Stack(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Positioned(
-                          left: 0,
-                          top: screenHeight * 0.03,
-                          child: Container(
-                            width: screenWidth * 0.87,
-                            height: screenHeight * 0.08,
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  left: screenWidth * 0.05,
-                                  top: screenHeight * 0.01,
-                                  child: Text(
-                                    '**********',
-                                    style: TextStyle(
-                                      color: Color(0xFFA0A5BA),
-                                      fontSize: screenWidth * 0.037,
-                                      fontFamily: 'Sen',
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.2,
-                                      letterSpacing: 6.72,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                        Text(
+                          '비밀번호',
+                          style: TextStyle(
+                            color: Color(0xFF31343D),
+                            fontSize: screenWidth * 0.035,
+                            fontFamily: 'Sen',
+                            fontWeight: FontWeight.w400,
+                            height: 1.2,
                           ),
                         ),
-                        Positioned(
-                          left: 0,
-                          top: 0,
-                          child: Text(
-                            '비밀번호',
-                            style: TextStyle(
-                              color: Color(0xFF31343D),
-                              fontSize: screenWidth * 0.035,
-                              fontFamily: 'Sen',
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                            ),
+                        SizedBox(height: screenHeight * 0.01),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFFCBD1D9)),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                        ),
-                        Positioned(
-                          left: screenWidth * 0.76,
-                          top: screenHeight * 0.03,
-                          child: Container(
-                            width: screenWidth * 0.05,
-                            height: screenHeight * 0.018,
-                            child: Stack(),
+                          child: TextField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: screenHeight * 0.015,
+                                horizontal: screenWidth * 0.03,
+                              ),
+                              hintText: '**********',
+                              hintStyle: TextStyle(
+                                color: Color(0xFFA0A5BA),
+                                fontSize: screenWidth * 0.037,
+                                fontFamily: 'Sen',
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                letterSpacing: 6.72,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -349,46 +346,40 @@ class LogInEmpty extends StatelessWidget {
                   child: Container(
                     width: screenWidth * 0.87,
                     height: screenHeight * 0.1,
-                    child: Stack(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Positioned(
-                          left: 0,
-                          top: screenHeight * 0.03,
-                          child: Container(
-                            width: screenWidth * 0.87,
-                            height: screenHeight * 0.08,
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  left: screenWidth * 0.05,
-                                  top: screenHeight * 0.03,
-                                  child: Text(
-                                    'example@gmail.com',
-                                    style: TextStyle(
-                                      color: Color(0xFFA0A5BA),
-                                      fontSize: screenWidth * 0.037,
-                                      fontFamily: 'Sen',
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.2,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                        Text(
+                          '이메일',
+                          style: TextStyle(
+                            color: Color(0xFF31343D),
+                            fontSize: screenWidth * 0.035,
+                            fontFamily: 'Sen',
+                            fontWeight: FontWeight.w400,
+                            height: 1.2,
                           ),
                         ),
-                        Positioned(
-                          left: screenWidth * 0.01,
-                          top: 0,
-                          child: Text(
-                            '이메일',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF31343D),
-                              fontSize: screenWidth * 0.035,
-                              fontFamily: 'Sen',
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
+                        SizedBox(height: screenHeight * 0.01),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Color(0xFFCBD1D9)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: screenHeight * 0.015,
+                                horizontal: screenWidth * 0.03,
+                              ),
+                              hintText: 'example@gmail.com',
+                              hintStyle: TextStyle(
+                                color: Color(0xFFA0A5BA),
+                                fontSize: screenWidth * 0.037,
+                                fontFamily: 'Sen',
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                              ),
                             ),
                           ),
                         ),

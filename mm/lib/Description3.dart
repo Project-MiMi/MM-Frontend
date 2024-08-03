@@ -29,16 +29,16 @@ class Description3 extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: screenHeight * 0.14),  // 위쪽 간격 (14% 높이)
+          SizedBox(height: screenHeight * 0.14), // 위쪽 간격 (14% 높이)
           Container(
-            width: screenWidth * 0.6,  // 화면 너비의 60%
-            height: screenHeight * 0.3,  // 화면 높이의 30%
+            width: screenWidth * 0.6, // 화면 너비의 60%
+            height: screenHeight * 0.3, // 화면 높이의 30%
             decoration: BoxDecoration(
               color: Color(0xFF98A8B8),
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          SizedBox(height: screenHeight * 0.1),  // 이미지와 텍스트 사이의 간격 (10% 높이)
+          SizedBox(height: screenHeight * 0.1), // 이미지와 텍스트 사이의 간격 (10% 높이)
           Text(
             '맛집 추천을 받아보세요',
             textAlign: TextAlign.center,
@@ -58,7 +58,7 @@ class Description3 extends StatelessWidget {
               fontFamily: 'Sen',
             ),
           ),
-          SizedBox(height: screenHeight * 0.04),  // 점과 텍스트 사이의 간격 (4% 높이)
+          SizedBox(height: screenHeight * 0.04), // 점과 텍스트 사이의 간격 (4% 높이)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -66,7 +66,7 @@ class Description3 extends StatelessWidget {
                 width: 10,
                 height: 10,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFE0CD),  // 왼쪽 점에 색상 적용
+                  color: Color(0xFFFFE0CD), // 왼쪽 점에 색상 적용
                   shape: BoxShape.circle,
                 ),
               ),
@@ -90,7 +90,33 @@ class Description3 extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: screenHeight * 0.04),  // 버튼과 점 사이의 간격 (4% 높이)
+          SizedBox(height: screenHeight * 0.04), // 버튼과 점 사이의 간격 (4% 높이)
+          ElevatedButton(
+            onPressed: () {
+              // 다음 페이지로 이동하는 코드
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LogInEmpty()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFFF6B6B), // 배경 색상
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              minimumSize: Size(screenWidth * 0.9, screenHeight * 0.08), // 버튼 크기
+            ),
+            child: Text(
+              '다음',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontFamily: 'Sen',
+              ),
+            ),
+          ),
+          SizedBox(height: 20), // 아래쪽 간격
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -98,39 +124,17 @@ class Description3 extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => LogInEmpty()),
               );
             },
-            child: ElevatedButton(
-              onPressed: () {
-                // 다음 페이지로 이동하는 코드
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF6B6B), // 배경 색상
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                minimumSize: Size(screenWidth * 0.9, screenHeight * 0.08), // 버튼 크기
-              ),
-              child: Text(
-                '다음',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontFamily: 'Sen',
-                ),
+            child: Text(
+              'Skip',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF646982),
+                fontSize: 16,
+                fontFamily: 'Sen',
               ),
             ),
           ),
-          SizedBox(height: 20),  // 아래쪽 간격
-          Text(
-            'Skip',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Color(0xFF646982),
-              fontSize: 16,
-              fontFamily: 'Sen',
-            ),
-          ),
-          SizedBox(height: 20),  // 아래쪽 간격
+          SizedBox(height: 20), // 아래쪽 간격
         ],
       ),
     );
